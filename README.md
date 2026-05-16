@@ -1,5 +1,6 @@
 # PST-ToolShop-Framework
-Greetings to everyone who reads this. This is my new TAF for a Practice Software Testing Tool Shop web site
+
+Greetings to everyone reading this. I'd like to introduce my new automated framework, created for a [website](https://practicesoftwaretesting.com/). I decided to create it for myself so I could practice in my free time. I also created a small documentation with test cases, a test plan, bugs, and other text junk in [Notion](https://www.notion.so/PST-ToolShop-Framework-35e8e3a4973280259522ce36fad6c81e?source=copy_link). As you can see, the framework was built on Playwright and TypeScript. I also used Claude for creating test cases, there only one agent specifically for this task, and I used MCP of Playwright and Notion for it. This "agent" and Claude in general, was used only for creating test cases and updating README.md file (this initial text was written by me, not by AI), since creating test cases isn't really interesting and fun task. The test script themself I wrote by myself  and the remaining documentation from Notion as well or pulled it from open sources, which will be included at the end of each document page in Notion. The test website itself includes a lot of different documentation, which can be found [here](https://testsmith-io.github.io/practice-software-testing/#/). I simply filtered some of it and then pasted it into Notion. The framework itself will be updated with new tests and various new methods as I practice and learn. I'll try to use something new, so if anyone reads this or looking into framework and find any errors or find a flawed execution of an action or the bad design or invalid implementation of a pattern or mechanism, please don't be angry. That's all for now, I think this file will be updated during the testing process. Below, you'll see the generated garbage from the LLM Model in case if you need it :)
 
 ---
 
@@ -7,9 +8,9 @@ Greetings to everyone who reads this. This is my new TAF for a Practice Software
 
 | Tool | Purpose |
 |------|---------|
-| [Playwright](https://playwright.dev/) | Browser automation & API testing |
+| Playwright | Browser automation & API testing |
 | TypeScript | Type-safe test authoring |
-| dotenv | Environment variable management |
+| [Notion](https://www.notion.so/PST-ToolShop-Framework-35e8e3a4973280259522ce36fad6c81e?source=copy_link) | Documentation |
 | GitHub Actions | CI/CD pipeline |
 
 ---
@@ -62,9 +63,6 @@ PracticeSoftwareTesting/
 ├── tests/
 │   ├── api/                        # API test specs
 │   └── ui/                         # UI test specs
-│       ├── e2e/                    # End-to-end user journey flows
-│       ├── regression/             # Feature-level regression tests
-│       └── smoke/                  # Critical-path smoke checks
 ├── playwright.config.ts
 ├── tsconfig.json
 └── package.json
