@@ -1,0 +1,1 @@
+export const HOME_PAGE_URL = 'https://practicesoftwaretesting.com/' as string
