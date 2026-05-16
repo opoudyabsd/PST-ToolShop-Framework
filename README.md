@@ -1,6 +1,5 @@
 # PST-ToolShop-Framework
-
-A Playwright + TypeScript test automation framework for [practicesoftwaretesting.com](https://practicesoftwaretesting.com/), structured around the **TAF Layers architecture** to support API testing and UI testing (E2E, regression, smoke).
+Greetings to everyone who reads this. This is my new TAF for a Practice Software Testing Tool Shop web site
 
 ---
 
