@@ -14,10 +14,6 @@ export const RANDOM_USER_DATA = {
     },
     "phone": faker.phone.number({ style: "international" }),
     "dob": "1999-01-01",
-    "password": faker.internet.password({
-        length: 20,
-        memorable: false,
-        pattern: /[A-Za-z0-9@#$%^&*!]/
-    }),
+    "password": "TEST_Password_123",
     "email": faker.internet.email()
 };
