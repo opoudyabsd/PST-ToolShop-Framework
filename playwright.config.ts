@@ -1,4 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config({ path: './config/.env' });
 
 export default defineConfig({
   testDir: './tests',
@@ -8,7 +10,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'https://practicesoftwaretesting.com/',
+    baseURL: process.env.BASE_URL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
@@ -23,21 +25,6 @@ export default defineConfig({
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
     // },
   ],
 
