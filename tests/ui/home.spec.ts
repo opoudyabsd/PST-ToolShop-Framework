@@ -29,8 +29,9 @@ test.describe("SMOKE TESTS", () => {
 
             await homePage.openProductDetails(firstProductCard);
 
-            await expect(page).toHaveURL(firstProductURL as string)
-            await expect(productDetailsPage.productTitle).toBeVisible()
+            await expect(page).toHaveURL(firstProductURL as string);
+            await expect(productDetailsPage.productTitle).toBeVisible();
+            await expect(productDetailsPage.productDesc).toBeVisible();
 
             const productDetailsData = await productDetailsPage.getProductData();
             expect(productDetailsData).toEqual(productCardData)
