@@ -1,10 +1,19 @@
-import { API_URL } from "../../test-data/urls"
+import { APIRequestContext } from "@playwright/test";
+import { expect } from "@playwright/test";
+
 export class RequestHandler {
-    private baseUrl: string = API_URL;
+
+    private request: APIRequestContext
+    private baseUrl: string;
     private apiPath: string = ''
     private queryParams: object = {};
-    private apiHeaders: object = {};
+    private apiHeaders: Record<string, string> = {};
     private apiBody: object = {};
+
+    constructor(request: APIRequestContext, APIBaseUrl: string) {
+        this.request = request;
+        this.baseUrl = APIBaseUrl;
+    }
 
     url(url: string): RequestHandler {
         this.baseUrl = url;
@@ -21,7 +30,7 @@ export class RequestHandler {
         return this;
     }
 
-    headers(headers: object): RequestHandler {
+    headers(headers: Record<string, string>): RequestHandler {
         this.apiHeaders = headers;
         return this;
     }
@@ -37,5 +46,17 @@ export class RequestHandler {
             url.searchParams.append(key, value)
         }
         return url.toString();
+    }
+
+    async getRequest(statusCode: number) {
+        const url = this.getUrl()
+        const response = await this.request.get(url, {
+            headers: this.apiHeaders
+        })
+
+        expect(response.status()).toEqual(statusCode)
+        const responseJSON = await response.json()
+
+        return responseJSON
     }
 }
