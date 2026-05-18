@@ -1,5 +1,5 @@
 import { test } from "../../src/fixtures/apiFixture";
-import { expect } from "@playwright/test";
+import { expect } from "../../src/utils/customAssertion";
 import { RANDOM_USER_DATA } from "../../test-data/testData"
 import { API_PATH } from "../../test-data/urls";
 
@@ -12,7 +12,7 @@ test.describe("User section: Smoke testing", () => {
         .body(RANDOM_USER_DATA)
         .postRequest(201)
 
-      expect(response).toEqual(expect.objectContaining({
+      expect(response).toMatchPartialObject({
         first_name: RANDOM_USER_DATA.first_name,
         last_name: RANDOM_USER_DATA.last_name,
         phone: RANDOM_USER_DATA.phone,
@@ -26,7 +26,7 @@ test.describe("User section: Smoke testing", () => {
           country: RANDOM_USER_DATA.address.country,
           postal_code: RANDOM_USER_DATA.address.postal_code,
         }
-      }))
+      })
     })
 
 })
