@@ -25,9 +25,9 @@ The framework is organized into discrete layers. Each layer has one responsibili
 ├─────────────────────────────────────────┤
 │            FIXTURE LAYER                │  src/fixtures/
 ├─────────────────────────────────────────┤
-│   PAGE OBJECTS  │  API SERVICES         │  src/ui/pages/ │ src/api/
+│     PAGE OBJECTS  │  REQUEST HANDLER    │  src/ui/pages/ │ src/api/
 ├─────────────────────────────────────────┤
-│   UI COMPONENTS │  API CLIENTS          │  src/ui/components/ │ src/api/
+│              UTILS LAYER                │  src/utils/
 ├─────────────────────────────────────────┤
 │             DATA LAYER                  │  test-data/
 ├─────────────────────────────────────────┤
@@ -37,13 +37,13 @@ The framework is organized into discrete layers. Each layer has one responsibili
 
 | Layer | Location | Responsibility |
 |-------|----------|----------------|
-| **Configuration** | `config/` | Environment variables, base URLs, credentials |
-| **Data** | `test-data/` | Static test fixtures and dynamic data builders |
-| **API Client** | `src/api/` | Low-level HTTP transport — sets headers, auth, base URL |
-| **UI Component** | `src/ui/components/` | Atomic reusable UI wrappers (navbar, toast, modal) |
+| **Configuration** | `config/` | Environment variables and base URLs |
+| **Data** | `test-data/` | Dynamic data builders using Faker.js |
+| **Request Handler** | `src/api/` | Fluent HTTP client — path, headers, body, method chaining |
 | **Page Object** | `src/ui/pages/` | Page-level actions and assertions (POM pattern) |
-| **Fixture** | `src/fixtures/` | Playwright `test.extend()` — injects pages & services into tests |
-| **Test** | `tests/` | Business-scenario specs; use only fixtures, never `new` directly |
+| **Utils** | `src/utils/` | Custom assertions, logger, shared helpers |
+| **Fixture** | `src/fixtures/` | Playwright `test.extend()` — injects API and UI objects into tests |
+| **Test** | `tests/` | Business-scenario specs split by `api/` and `ui/` |
 
 ---
 
@@ -52,14 +52,21 @@ The framework is organized into discrete layers. Each layer has one responsibili
 ```ini
 PracticeSoftwareTesting/
 ├── config/
-│   └── .env                        # Environment variables (gitignored)
+│   └── .env.example                # Environment variables example
 ├── src/
-│   ├── api/                        # API clients and service classes
-│   ├── fixtures/                   # Custom Playwright fixture definitions
-│   └── ui/
-│       ├── components/             # Reusable UI component objects
-│       └── pages/                  # Page Object Model classes
-├── test-data/                      # Static JSON/CSV seed data and builders
+│   ├── api/
+│   │   └── requestHandler.ts       # Fluent HTTP request builder
+│   ├── fixtures/
+│   │   └── apiFixture.ts           # API Fixtures
+│   ├── ui/
+│   │   ├── basePage.ts             # Base page class
+│   │   └── pages/                  # Page Object Model classes
+│   └── utils/
+│       ├── customAssertion.ts      # Custom assertions
+│       ├── logger.ts               # API request/response logger
+│       └── commonMethods.ts        # Shared helper methods
+├── test-data/
+│   └── testData.ts                 # Testing data
 ├── tests/
 │   ├── api/                        # API test specs
 │   └── ui/                         # UI test specs
@@ -80,41 +87,31 @@ npm install
 
 # Install Playwright browsers
 npx playwright install
-
-# Run all tests
-npx playwright test
-
-# Run only smoke tests
-npx playwright test --grep @smoke
-
-# Run only API tests
-npx playwright test tests/api/
-
-# Run only UI tests
-npx playwright test tests/ui/
-
-# Open the HTML report
-npx playwright show-report
 ```
 
 ---
 
-## Environment Setup
-
-Copy and configure the environment file before running tests:
+## Available Commands
 
 ```bash
-cp config/.env.example config/.env
+# Run all tests
+npm test
+
+# Run UI tests only (chromium)
+npm run test:ui
+
+# Run API tests only
+npm run test:api
+
+# Run tests tagged @smoke
+npm run test:smoke
+
+# Run tests tagged @regression
+npm run test:regression
+
+# Run tests tagged @E2E
+npm run test:E2E
+
+# Open HTML report
+npm run report
 ```
-
-| Variable | Description |
-|----------|-------------|
-| `BASE_URL` | Target application URL |
-| `USER_EMAIL` | Test user email |
-| `USER_PASSWORD` | Test user password |
-
----
-
-## CI/CD
-
-GitHub Actions runs the full test suite on every push and pull request to `main`, then uploads the HTML report as a build artifact (retained 30 days). See [`.github/workflows/playwright.yml`](.github/workflows/playwright.yml).
