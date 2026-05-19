@@ -6,7 +6,7 @@ export class RequestHandler {
 
     private request: APIRequestContext
     private logger: APILogger;
-    private baseUrl: string;
+    private baseUrl: string | undefined;
     private apiPath: string = ''
     private queryParams: object = {};
     private apiHeaders: Record<string, string> = {};
@@ -60,12 +60,22 @@ export class RequestHandler {
         }
     }
 
+    private cleanupFields() {
+        this.apiBody = {}
+        this.apiHeaders = {}
+        this.baseUrl = undefined;
+        this.apiPath = '';
+        this.queryParams = {}
+    }
+
     async getRequest(statusCode: number) {
         const url = this.getUrl()
         this.logger.logRequest("GET", url, this.apiHeaders)
         const response = await this.request.get(url, {
             headers: this.apiHeaders
         })
+        this.cleanupFields()
+
         const actualStatusCode = response.status()
         const responseJSON = await response.json()
 
@@ -82,6 +92,8 @@ export class RequestHandler {
             headers: this.apiHeaders,
             data: this.apiBody
         })
+        this.cleanupFields()
+
         const actualStatusCode = response.status()
         const responseJSON = await response.json()
 
@@ -98,6 +110,8 @@ export class RequestHandler {
             headers: this.apiHeaders,
             data: this.apiBody
         })
+        this.cleanupFields()
+
         const actualStatusCode = response.status()
         const responseJSON = await response.json()
 
@@ -114,6 +128,8 @@ export class RequestHandler {
         const response = await this.request.delete(url, {
             headers: this.apiHeaders
         })
+        this.cleanupFields()
+
         const actualStatusCode = response.status()
 
         this.logger.logResponse(actualStatusCode)
