@@ -1,6 +1,6 @@
 import { APIRequestContext } from "@playwright/test";
-import { expect } from "@playwright/test";
 import { APILogger } from "../utils/logger";
+import { API_URL } from "../../test-data/urls";
 
 export class RequestHandler {
 
@@ -63,7 +63,7 @@ export class RequestHandler {
     private cleanupFields() {
         this.apiBody = {}
         this.apiHeaders = {}
-        this.baseUrl = undefined;
+        this.baseUrl = API_URL;
         this.apiPath = '';
         this.queryParams = {}
     }
