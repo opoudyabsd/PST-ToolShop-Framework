@@ -1,15 +1,18 @@
 import { expect as baseExpect } from "@playwright/test"
 import { APILogger } from "./logger"
+import { schemaValidator } from "./schemaValidator";
 
 declare global {
     namespace PlaywrightTest {
         interface Matchers<R, T> {
             toMatchPartialObject(expected: T): R
+            toMatchSchema(dirName: string, fileName: string, createSchemaFlag?: boolean): Promise<R>
         }
     }
 }
 
 let apiLogger: APILogger;
+
 
 export const setCustomExpectLogger = (logger: APILogger) => {
     apiLogger = logger
@@ -52,6 +55,31 @@ export const expect = baseExpect.extend({
             expected,
             actual: received,
         };
+    },
 
+    async toMatchSchema(received: any, dirName: string, fileName: string, createSchemaFlag: boolean = false) {
+        let pass: boolean
+        let logs: string
+        let message: string;
+
+        try {
+            await schemaValidator(dirName, fileName, received, createSchemaFlag)
+            pass = true;
+        } catch (error: any) {
+            pass = false;
+            const logs = apiLogger.getRecentLogs()
+            message = `${error.message}\n\nRecent API Activity: \n${logs}`
+        }
+
+        if (this.isNot) {
+            pass = !pass;
+        }
+
+        return {
+            message: () => message,
+            pass,
+            name: 'toMatchSchema',
+            actual: received,
+        };
     }
 })

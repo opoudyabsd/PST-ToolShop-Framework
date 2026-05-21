@@ -2,6 +2,7 @@ import { test } from "../../src/fixtures/apiFixture";
 import { expect } from "../../src/utils/customAssertion";
 import { RANDOM_USER_DATA, ADMIN_ACCOUNT, BEARER_REGEXP_MATCH, ACCOUNT_VALIDATION_MATCH } from "../../test-data/requestData"
 import { API_PATH } from "../../test-data/urls";
+import { schemaValidator } from "../../src/utils/schemaValidator"
 
 test.describe("User section: Smoke testing", () => {
 
@@ -21,6 +22,8 @@ test.describe("User section: Smoke testing", () => {
         expect(account.email).toMatch(ACCOUNT_VALIDATION_MATCH.email)
         expect(account.role).toMatch(ACCOUNT_VALIDATION_MATCH.role)
       }
+      await expect(response).toMatchSchema('userCategory', 'GET_All-Users')
+
     })
 
   test("POST | Register new user with random data", { tag: ['@API', '@POST', '@user', '@smoke'] },
@@ -30,6 +33,7 @@ test.describe("User section: Smoke testing", () => {
         .body(RANDOM_USER_DATA)
         .postRequest(201)
 
+      await expect(response).toMatchSchema('userCategory', 'POST_Register-new-user')
       expect(response).toMatchPartialObject({
         first_name: RANDOM_USER_DATA.first_name,
         last_name: RANDOM_USER_DATA.last_name,
@@ -54,6 +58,7 @@ test.describe("User section: Smoke testing", () => {
         .body(ADMIN_ACCOUNT)
         .postRequest(200)
 
+      await expect(response).toMatchSchema('userCategory', 'POST_Login')
       expect(response["access_token"]).toMatch(BEARER_REGEXP_MATCH)
       expect(response).toMatchPartialObject({
         token_type: "bearer",
