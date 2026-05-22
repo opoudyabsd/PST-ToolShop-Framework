@@ -14,7 +14,6 @@ test.describe("User section: Smoke testing", () => {
         .getRequest(200)
 
       const accountData = response["data"]
-      console.log(response)
 
       for (const account of accountData) {
         expect(account.id).toMatch(ACCOUNT_VALIDATION_MATCH.id)
