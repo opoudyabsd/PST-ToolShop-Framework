@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "dob": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "house_number": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "postal_code": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "street",
+        "house_number",
+        "city",
+        "state",
+        "country",
+        "postal_code"
+      ]
+    }
+  },
+  "required": [
+    "first_name",
+    "last_name",
+    "phone",
+    "dob",
+    "email",
+    "id",
+    "created_at",
+    "address"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "object",
+  "properties": {
+    "current_page": {
+      "type": "number"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "provider": {
+            "type": ["string", "null"]
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "phone": {
+            "type": ["string", "null"]
+          },
+          "dob": {
+            "type": ["string", "null"]
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "totp_enabled": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": ["string", "null"]
+              },
+              "house_number": {
+                "type": ["string", "null"]
+              },
+              "city": {
+                "type": ["string", "null"]
+              },
+              "state": {
+                "type": ["string", "null"]
+              },
+              "country": {
+                "type": ["string", "null"]
+              },
+              "postal_code": {
+                "type": ["string", "null"]
+              }
+            },
+            "required": [
+              "street",
+              "city",
+              "country"
+            ]
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "role": {
+            "type": "string"
+          },
+          "failed_login_attempts": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "provider",
+          "first_name",
+          "last_name",
+          "dob",
+          "email",
+          "totp_enabled",
+          "created_at",
+          "address",
+          "enabled",
+          "role",
+          "failed_login_attempts"
+        ]
+      }
+    },
+    "from": {
+      "type": "number"
+    },
+    "last_page": {
+      "type": "number"
+    },
+    "per_page": {
+      "type": "number"
+    },
+    "to": {
+      "type": "number"
+    },
+    "total": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "current_page",
+    "data",
+    "from",
+    "last_page",
+    "per_page",
+    "to",
+    "total"
+  ]
+}
