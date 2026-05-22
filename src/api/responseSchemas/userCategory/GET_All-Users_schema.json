@@ -27,10 +27,11 @@
             "type": ["string", "null"]
           },
           "dob": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "email": {
-            "type": "string"
+            "type": "string",
+            "format": "email"
           },
           "totp_enabled": {
             "type": "boolean"
@@ -42,19 +43,19 @@
             "type": "object",
             "properties": {
               "street": {
-                "type": "string"
+                "type": ["string", "null"]
               },
               "house_number": {
                 "type": ["string", "null"]
               },
               "city": {
-                "type": "string"
+                "type": ["string", "null"]
               },
               "state": {
                 "type": ["string", "null"]
               },
               "country": {
-                "type": "string"
+                "type": ["string", "null"]
               },
               "postal_code": {
                 "type": ["string", "null"]

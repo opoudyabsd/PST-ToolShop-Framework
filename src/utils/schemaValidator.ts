@@ -1,10 +1,12 @@
 import fs from "fs/promises"
 import path from "path"
 import Ajv from "ajv"
+import addFormats from "ajv-formats"
 import { createSchema } from "genson-js"
 
 const SCHEMA_BASE_PATH = './src/api/responseSchemas'
 const ajv = new Ajv({ allErrors: true })
+addFormats(ajv)
 
 export async function schemaValidator(dirName: string, fileName: string, responseBody: object, createdSchemaFlag: boolean): Promise<void> {
     const schemaPath = path.join(SCHEMA_BASE_PATH, dirName, `${fileName}_schema.json`)
