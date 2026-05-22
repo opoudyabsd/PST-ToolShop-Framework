@@ -26,8 +26,8 @@ export const BEARER_REGEXP_MATCH = /^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-
 
 export const ACCOUNT_VALIDATION_MATCH = {
     id: /^[A-Za-z0-9]+$/,
-    first_name: /^[A-Za-z]+([-' ][A-Za-z]+)*$/,
-    last_name: /^[A-Za-z]+([-' ][A-Za-z]+)*$/,
+    first_name: /^[\w\W]+$/,
+    last_name: /^[\w\W]+$/,
     email: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
     role: /^(user|admin)$/
 };
