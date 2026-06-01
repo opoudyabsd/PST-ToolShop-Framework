@@ -1,6 +1,6 @@
 import { APIRequestContext } from "@playwright/test";
 import { APILogger } from "../utils/logger";
-import { API_URL } from "../../test-data/urls";
+import { API_URL } from "../../test-data/API/urls";
 
 export class RequestHandler {
 
