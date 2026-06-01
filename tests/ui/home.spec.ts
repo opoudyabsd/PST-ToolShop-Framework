@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../../src/ui/pages/homePage'
 import { ProductDetailsPage } from '../../src/ui/pages/productDetailsPage'
-import { HOME_PAGE_URL } from '../../test-data/urls'
+import { HOME_PAGE_URL } from '../../test-data/API/urls'
 
 test.describe("SMOKE TESTS", () => {
 

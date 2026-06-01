@@ -1,9 +1,9 @@
 import { test as base, expect } from "@playwright/test";
 import { RequestHandler } from "../api/requestHandler";
-import { API_URL, API_PATH } from "../../test-data/urls"
+import { API_URL, API_PATH } from "../../test-data/API/urls"
 import { APILogger } from "../utils/logger"
 import { setCustomExpectLogger } from "../utils/customAssertion"
-import { ADMIN_ACCOUNT, BEARER_REGEXP_MATCH } from "../../test-data/requestData"
+import { ADMIN_ACCOUNT, BEARER_REGEXP_MATCH } from "../../test-data/API/requestData"
 
 
 export type FixtureOptions = {

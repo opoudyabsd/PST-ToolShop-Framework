@@ -1,7 +1,7 @@
 import { test } from "../../src/fixtures/apiFixture";
 import { expect } from "../../src/utils/customAssertion";
-import { RANDOM_USER_DATA, ADMIN_ACCOUNT, BEARER_REGEXP_MATCH, ACCOUNT_VALIDATION_MATCH } from "../../test-data/requestData"
-import { API_PATH } from "../../test-data/urls";
+import { RANDOM_USER_DATA, ADMIN_ACCOUNT, BEARER_REGEXP_MATCH, ACCOUNT_VALIDATION_MATCH } from "../../test-data/API/requestData"
+import { API_PATH } from "../../test-data/API/urls";
 import { schemaValidator } from "../../src/utils/schemaValidator"
 
 test.describe("User section: Smoke testing", () => {
