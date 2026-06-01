@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { HomePage } from '../../src/ui/pages/homePage'
-import { ProductDetailsPage } from '../../src/ui/pages/productDetailsPage'
-import { HOME_PAGE_URL } from '../../test-data/API/urls'
+import { HomePage } from '../../../src/ui/pages/homePage'
+import { ProductDetailsPage } from '../../../src/ui/pages/productDetailsPage'
+import { HOME_PAGE_URL } from '../../../test-data/API/urls'
 
 test.describe("SMOKE TESTS", () => {
 
@@ -35,6 +35,20 @@ test.describe("SMOKE TESTS", () => {
 
             const productDetailsData = await productDetailsPage.getProductData();
             expect(productDetailsData).toEqual(productCardData)
+        }
+    )
+
+    test('[TC-PO-SMOKE-003] | Check the pagination controls are displayed and functional',
+        { tag: ['@smoke', '@PO'] }, async () => {
+            const firstProductNamePage1 = await homePage.getProductCardName(homePage.productCard.first()) as string
+
+            await expect(homePage.paginationSection).toBeVisible()
+            await expect(homePage.currentPage).toHaveText('1')
+
+            await homePage.nextPageBtn.click()
+
+            await expect(homePage.currentPage).toHaveText('2')
+            await expect(homePage.productCard.first()).not.toHaveText(firstProductNamePage1)
         }
     )
 })

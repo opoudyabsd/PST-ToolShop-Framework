@@ -7,6 +7,10 @@ export class HomePage extends BasePage {
     public readonly productGrid: Locator;
     public readonly productGridContainer: Locator;
     public readonly productCard: Locator;
+    public readonly paginationSection: Locator;
+    public readonly previousPageBtn: Locator;
+    public readonly nextPageBtn: Locator;
+    public readonly currentPage: Locator;
 
     private productCardPrice: string;
     private productCardName: string;
@@ -18,6 +22,10 @@ export class HomePage extends BasePage {
         this.productGrid = page.locator('div[class="col-md-9"]')
         this.productGridContainer = this.productGrid.locator('div[class="container"]')
         this.productCard = this.productGridContainer.locator('a[class="card"]')
+        this.paginationSection = page.locator('ul[class*="pagination"]')
+        this.previousPageBtn = this.paginationSection.locator('a[aria-label="Previous"]')
+        this.nextPageBtn = this.paginationSection.locator('a[aria-label="Next"]')
+        this.currentPage = this.paginationSection.locator('li[class="page-item active"]')
 
         this.productCardPrice = "span[data-test='product-price']"
         this.productCardName = 'h5[data-test="product-name"]'
