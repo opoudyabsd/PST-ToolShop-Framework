@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../../../src/ui/pages/homePage'
 import { ProductDetailsPage } from '../../../src/ui/pages/productDetailsPage'
 import { HOME_PAGE_URL } from '../../../test-data/API/urls'
+import { SEARCH_QUERY } from '../../../test-data/UI/testData'
 
 test.describe("SMOKE TESTS", () => {
 
@@ -54,16 +55,15 @@ test.describe("SMOKE TESTS", () => {
 
     test('[TC-PO-SMOKE-004] | Verify that search returns expected matching results',
         { tag: ['@smoke', '@PO', '@critical'] }, async () => {
-            const searcherItem = 'pliers'
-            await homePage.searchForItem(searcherItem)
+            await homePage.searchForItem(SEARCH_QUERY.pliers)
 
             await expect(homePage.searchedForHeader).toBeVisible();
-            await expect(homePage.searchTermFor).toHaveText(searcherItem)
+            await expect(homePage.searchTermFor).toHaveText(SEARCH_QUERY.pliers)
 
             const allProductCardNames = await homePage.getAllProductCardNamesPerPage();
 
-            for (let names of allProductCardNames) {
-                expect(names).toContain(searcherItem)
+            for (const names of allProductCardNames) {
+                expect(names).toContain(SEARCH_QUERY.pliers)
             }
         }
     )
