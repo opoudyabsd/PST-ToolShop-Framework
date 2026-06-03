@@ -11,13 +11,24 @@ export class HomePage extends BasePage {
     public readonly previousPageBtn: Locator;
     public readonly nextPageBtn: Locator;
     public readonly currentPage: Locator;
+    public readonly searchField: Locator;
+    public readonly searchSubmitBtn: Locator;
+    public readonly searchedForHeader: Locator;
+    public readonly searchTermFor: Locator;
 
     private productCardPrice: string;
     private productCardName: string;
     private productCardImage: string;
+    private filterSection: Locator;
 
     constructor(page: Page) {
         super(page)
+
+        this.productCardPrice = "span[data-test='product-price']"
+        this.productCardName = 'h5[data-test="product-name"]'
+        this.productCardImage = 'img[class="card-img-top"]'
+
+        this.filterSection = page.locator('#filters')
 
         this.productGrid = page.locator('div[class="col-md-9"]')
         this.productGridContainer = this.productGrid.locator('div[class="container"]')
@@ -26,10 +37,10 @@ export class HomePage extends BasePage {
         this.previousPageBtn = this.paginationSection.locator('a[aria-label="Previous"]')
         this.nextPageBtn = this.paginationSection.locator('a[aria-label="Next"]')
         this.currentPage = this.paginationSection.locator('li[class="page-item active"]')
-
-        this.productCardPrice = "span[data-test='product-price']"
-        this.productCardName = 'h5[data-test="product-name"]'
-        this.productCardImage = 'img[class="card-img-top"]'
+        this.searchField = this.filterSection.locator('#search-query')
+        this.searchSubmitBtn = this.filterSection.locator('button[data-test="search-submit"]')
+        this.searchedForHeader = page.locator('h3[data-test="search-caption"]')
+        this.searchTermFor = this.searchedForHeader.locator('span[data-test="search-term"]')
     }
 
     async openProductDetails(locator: Locator): Promise<void> {
@@ -59,5 +70,21 @@ export class HomePage extends BasePage {
             productPrice: await this.getProductCardPrice(locator),
             productImgPath: await this.getProductCardImgPath(locator)
         }
+    }
+
+    async searchForItem(productName: string): Promise<void> {
+        await this.searchField.fill(productName)
+        await this.searchSubmitBtn.click()
+    }
+
+    async getAllProductCardNamesPerPage(): Promise<string[]> {
+        const allProductCardNames = await this.page.locator(this.productCardName).all()
+        const productCardNames = []
+        for (let productCardName of allProductCardNames) {
+            const extractedName = await productCardName.textContent() as string
+            productCardNames.push(extractedName.toLowerCase().trim())
+        }
+
+        return productCardNames
     }
 }
