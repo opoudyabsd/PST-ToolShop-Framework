@@ -3,6 +3,7 @@ import { HomePage } from '../../../src/ui/pages/homePage'
 import { ProductDetailsPage } from '../../../src/ui/pages/productDetailsPage'
 import { HOME_PAGE_URL } from '../../../test-data/API/urls'
 import { SEARCH_QUERY } from '../../../test-data/UI/testData'
+import { firstElementWaitForStable } from '../../../src/utils/commonMethods'
 
 test.describe("SMOKE TESTS", () => {
 
@@ -60,6 +61,8 @@ test.describe("SMOKE TESTS", () => {
 
             await expect(homePage.searchedForHeader).toBeVisible();
             await expect(homePage.searchTermFor).toHaveText(SEARCH_QUERY.pliers)
+
+            await firstElementWaitForStable(homePage.productCard)
 
             const allProductCardNames = await homePage.getAllProductCardNamesPerPage();
 

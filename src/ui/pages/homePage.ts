@@ -78,8 +78,6 @@ export class HomePage extends BasePage {
     }
 
     async getAllProductCardNamesPerPage(): Promise<string[]> {
-        await this.productCard.first().waitFor({ state: 'visible' })
-
         const allProductCardNames = await this.page.locator(this.productCardName).all()
         const productCardNames = []
         for (let productCardName of allProductCardNames) {
