@@ -24,6 +24,7 @@ test.describe("SMOKE TESTS", () => {
 
     test('[TC-PO-SMOKE-002] | Verify that clicking on a product card navigates to detail page',
         { tag: ['@smoke', '@PO', '@critical'] }, async ({ page }) => {
+
             const firstProductCard = homePage.productCard.first();
             const firstProductURL = await homePage.getProductCardURL(firstProductCard);
             const productCardData = await homePage.getProductCardData(firstProductCard)
