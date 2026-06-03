@@ -16,13 +16,13 @@ test.describe("SMOKE TESTS", () => {
     })
 
     test('[TC-PO-SMOKE-001] | Check the loading of the product grid on the home page',
-        { tag: ['@smoke', '@PO'] }, async () => {
+        { tag: ['@smoke', '@PO', '@critical'] }, async () => {
             await expect(homePage.productGrid).toBeVisible()
             await expect(homePage.productGridContainer).toBeVisible()
         })
 
     test('[TC-PO-SMOKE-002] | Verify that clicking on a product card navigates to detail page',
-        { tag: ['@smoke', '@PO'] }, async ({ page }) => {
+        { tag: ['@smoke', '@PO', '@critical'] }, async ({ page }) => {
             const firstProductCard = homePage.productCard.first();
             const firstProductURL = await homePage.getProductCardURL(firstProductCard);
             const productCardData = await homePage.getProductCardData(firstProductCard)
@@ -39,7 +39,7 @@ test.describe("SMOKE TESTS", () => {
     )
 
     test('[TC-PO-SMOKE-003] | Check the pagination controls are displayed and functional',
-        { tag: ['@smoke', '@PO'] }, async () => {
+        { tag: ['@smoke', '@PO', '@critical'] }, async () => {
             const firstProductNamePage1 = await homePage.getProductCardName(homePage.productCard.first()) as string
 
             await expect(homePage.paginationSection).toBeVisible()
@@ -49,6 +49,22 @@ test.describe("SMOKE TESTS", () => {
 
             await expect(homePage.currentPage).toHaveText('2')
             await expect(homePage.productCard.first()).not.toHaveText(firstProductNamePage1)
+        }
+    )
+
+    test('[TC-PO-SMOKE-004] | Verify that search returns expected matching results',
+        { tag: ['@smoke', '@PO', '@critical'] }, async () => {
+            const searcherItem = 'pliers'
+            await homePage.searchForItem(searcherItem)
+
+            await expect(homePage.searchedForHeader).toBeVisible();
+            await expect(homePage.searchTermFor).toHaveText(searcherItem)
+
+            const allProductCardNames = await homePage.getAllProductCardNamesPerPage();
+
+            for (let names of allProductCardNames) {
+                expect(names).toContain(searcherItem)
+            }
         }
     )
 })
