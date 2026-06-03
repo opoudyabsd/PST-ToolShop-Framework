@@ -56,13 +56,13 @@ test.describe("SMOKE TESTS", () => {
     )
 
     test('[TC-PO-SMOKE-004] | Verify that search returns expected matching results',
-        { tag: ['@smoke', '@PO', '@critical'] }, async () => {
+        { tag: ['@smoke', '@PO', '@critical'] }, async ({ page }) => {
             await homePage.searchForItem(SEARCH_QUERY.pliers)
 
             await expect(homePage.searchedForHeader).toBeVisible();
             await expect(homePage.searchTermFor).toHaveText(SEARCH_QUERY.pliers)
 
-            await firstElementWaitForStable(homePage.productCard)
+            await page.waitForLoadState('domcontentloaded')
 
             const allProductCardNames = await homePage.getAllProductCardNamesPerPage();
 
