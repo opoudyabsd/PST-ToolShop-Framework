@@ -10,6 +10,9 @@ Greetings to everyone reading this. I'd like to introduce my new automated frame
 |------|---------|
 | Playwright | Browser automation & API testing |
 | TypeScript | Type-safe test authoring |
+| Faker.js | Dynamic test data generation |
+| AJV | JSON Schema validation for API responses |
+| dotenv | Environment variable management |
 | [Notion](https://www.notion.so/PST-ToolShop-Framework-35e8e3a4973280259522ce36fad6c81e?source=copy_link) | Documentation |
 | GitHub Actions | CI/CD pipeline |
 
@@ -38,10 +41,10 @@ The framework is organized into discrete layers. Each layer has one responsibili
 | Layer | Location | Responsibility |
 |-------|----------|----------------|
 | **Configuration** | `config/` | Environment variables and base URLs |
-| **Data** | `test-data/` | Dynamic data builders using Faker.js |
-| **Request Handler** | `src/api/` | Fluent HTTP client — path, headers, body, method chaining |
+| **Data** | `test-data/API/` & `test-data/UI/` | Request payloads, endpoint URLs, and UI test data |
+| **Request Handler** | `src/api/` | Fluent HTTP client — path, headers, body, method chaining; JSON Schema definitions in `responseSchemas/` |
 | **Page Object** | `src/ui/pages/` | Page-level actions and assertions (POM pattern) |
-| **Utils** | `src/utils/` | Custom assertions, logger, shared helpers |
+| **Utils** | `src/utils/` | Custom assertions, logger, shared helpers, JSON Schema validator |
 | **Fixture** | `src/fixtures/` | Playwright `test.extend()` — injects API and UI objects into tests |
 | **Test** | `tests/` | Business-scenario specs split by `api/` and `ui/` |
 
@@ -51,25 +54,43 @@ The framework is organized into discrete layers. Each layer has one responsibili
 
 ```ini
 PracticeSoftwareTesting/
+├── .github/
+│   └── workflows/
+│       └── playwright.yml          # GitHub Actions CI/CD pipeline
 ├── config/
 │   └── .env.example                # Environment variables example
 ├── src/
 │   ├── api/
-│   │   └── requestHandler.ts       # Fluent HTTP request builder
+│   │   ├── requestHandler.ts       # Fluent HTTP request builder
+│   │   └── responseSchemas/        # JSON Schema definitions for API responses
+│   │       └── userCategory/
+│   │           ├── GET_All-Users_schema.json
+│   │           ├── POST_Login_schema.json
+│   │           └── POST_Register-new-user_schema.json
 │   ├── fixtures/
-│   │   └── apiFixture.ts           # API Fixtures
+│   │   └── apiFixture.ts           # API fixtures
 │   ├── ui/
 │   │   ├── basePage.ts             # Base page class
 │   │   └── pages/                  # Page Object Model classes
+│   │       ├── homePage.ts
+│   │       └── productDetailsPage.ts
 │   └── utils/
+│       ├── commonMethods.ts        # Shared helper methods
 │       ├── customAssertion.ts      # Custom assertions
 │       ├── logger.ts               # API request/response logger
-│       └── commonMethods.ts        # Shared helper methods
+│       └── schemaValidator.ts      # JSON Schema validation utility
 ├── test-data/
-│   └── testData.ts                 # Testing data
+│   ├── API/
+│   │   ├── requestData.ts          # API request payloads
+│   │   └── urls.ts                 # API endpoint URLs
+│   └── UI/
+│       └── testData.ts             # UI testing data
 ├── tests/
 │   ├── api/                        # API test specs
+│   │   └── smokeTest.spec.ts
 │   └── ui/                         # UI test specs
+│       └── Home/
+│           └── home.smoke.spec.ts
 ├── playwright.config.ts
 ├── tsconfig.json
 └── package.json
