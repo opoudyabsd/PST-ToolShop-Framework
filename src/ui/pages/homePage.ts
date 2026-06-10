@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
 import { BasePage } from "../basePage";
 
 
@@ -45,6 +45,7 @@ export class HomePage extends BasePage {
 
     async openProductDetails(locator: Locator): Promise<void> {
         await locator.click();
+        await this.page.waitForLoadState('domcontentloaded')
     }
 
     async getProductCardURL(locator: Locator): Promise<string | null> {
@@ -86,5 +87,15 @@ export class HomePage extends BasePage {
         }
 
         return productCardNames
+    }
+
+    async getProductID(product: Locator): Promise<string> {
+        const productValue = await product.getAttribute('data-test');
+        if (!productValue) throw new Error('data-test attribute is missing on product card')
+
+        const productID = productValue.match(/(?<=product-)[A-Za-z0-9]+/)
+        if (productID == null) throw new Error('Product ID cannot be extracted')
+
+        return productID[0]
     }
 }

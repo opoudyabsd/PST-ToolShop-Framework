@@ -3,7 +3,6 @@ import { HomePage } from '../../../src/ui/pages/homePage'
 import { ProductDetailsPage } from '../../../src/ui/pages/productDetailsPage'
 import { HOME_PAGE_URL } from '../../../test-data/API/urls'
 import { SEARCH_QUERY } from '../../../test-data/UI/testData'
-import { firstElementWaitForStable } from '../../../src/utils/commonMethods'
 
 test.describe("SMOKE TESTS", () => {
 
